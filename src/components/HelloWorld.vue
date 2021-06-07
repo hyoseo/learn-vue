@@ -36,6 +36,7 @@
 <script>
 export default {
   name: 'HelloWorld',
+  // pros: ['msg']와 동일 타입까지 명시해준것임
   props: {
     msg: String
   }
