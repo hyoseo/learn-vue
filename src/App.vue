@@ -4,18 +4,32 @@
         v-bind:propsdata="str"
         v-on:renew="renewStr"
     >
-
     </app-header>
+    <br/>
+    <form v-on:submit.prevent="submitForm">
+      <div>
+        <label for="username">id: </label>
+        <input id="username" type="text" v-model="username">
+      </div>
+      <div>
+        <label for="password">pw: </label>
+        <input id="password" type="password" v-model="password">
+      </div>
+      <button type="submit">login</button>
+    </form>
   </div>
 </template>
 
 <script>
 import AppHeader from "@/components/AppHeader";
+import axios from 'axios'
 
 export default {
   data: function () {
     return {
-      str: 'Header'
+      str: 'Header',
+      username: '',
+      password: '',
     }
   },
   components: {
@@ -24,6 +38,25 @@ export default {
   methods: {
     renewStr: function () {
       this.str = 'hi';
+    },
+    // eslint-disable-next-line no-unused-vars
+    submitForm: function (event) {
+      console.log(this.username, this.password);
+      const url = 'https://jsonplaceholder.typicode.com/users';
+      const data = {
+        username: this.username,
+        password: this.password,
+      }
+      axios.post(url, data)
+          .then(function (response) {
+            console.log(response)
+          })
+          .catch(function (error) {
+            console.log(error)
+          });
+      // fetch('https://jsonplaceholder.typicode.com/todos/1')
+      //     .then(response => response.json())
+      //     .then(json => console.log(json))
     }
   }
 }
